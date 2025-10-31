@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词背诵计划生成器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>单词背诵计划生成器</h1>
+        
+        <!-- 输入区域 -->
+        <div class="input-section">
+            <form id="planForm">
+                <div class="form-group">
+                    <label for="totalWords">总单词量（个）：</label>
+                    <input type="number" id="totalWords" name="totalWords" min="1" placeholder="例如：500" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studyDays">计划背诵天数（天）：</label>
+                    <input type="number" id="studyDays" name="studyDays" min="1" placeholder="例如：10" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="includeReview">是否包含复习：</label>
+                    <select id="includeReview" name="includeReview" required>
+                        <option value="yes">是（基于遗忘曲线智能复习）</option>
+                        <option value="no">否（仅背新单词）</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="generate-btn">生成背诵计划</button>
+            </form>
+        </div>
+        
+        <!-- 输出区域 -->
+        <div class="output-section" id="outputSection" style="display: none;">
+            <h2>你的专属背诵计划</h2>
+            
+            <!-- 遗忘曲线可视化区域 -->
+            <div class="forgetting-curve-section" id="forgettingCurveSection">
+                <h3>遗忘曲线与记忆规律</h3>
+                <div class="curve-explanation">
+                    <p><strong>遗忘曲线理论：</strong>德国心理学家艾宾浩斯发现，人类大脑对新事物的遗忘是有规律的。初次学习后，如不复习，记忆保留率会随时间快速下降。</p>
+                    <p><strong>科学复习策略：</strong>在遗忘曲线的关键时间点（第1、2、4、7、15、30天）进行复习，可以有效提高长期记忆保持率。</p>
+                </div>
+                <div class="curve-chart-container">
+                    <canvas id="forgettingCurveChart" width="600" height="300"></canvas>
+                </div>
+                <div class="curve-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #ff6b6b;"></span>
+                        <span>无复习（自然遗忘）</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #4ecdc4;"></span>
+                        <span>有复习（记忆保持）</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-marker">📍</span>
+                        <span>复习节点</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="copy-btn" id="copyBtn">一键复制计划</button>
+            
+            <div class="table-container">
+                <table class="study-plan-table">
+                    <thead>
+                        <tr>
+                            <th>第几天</th>
+                            <th>新单词量（个）</th>
+                            <th>复习单词量（个）</th>
+                            <th>当日总任务量（个）</th>
+                            <th>备注</th>
+                        </tr>
+                    </thead>
+                    <tbody id="planTableBody">
+                        <!-- 动态生成的计划内容将插入这里 -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="copy-success" id="copySuccess" style="display: none;">
+                ✓ 计划已复制到剪贴板！
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
